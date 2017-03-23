@@ -3,7 +3,7 @@ using System;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-    public static class IServiceCollectionExtensions
+    public static class HangTaskSchedulerIServiceCollectionExtensions
     {
         /// <summary>
         /// 
