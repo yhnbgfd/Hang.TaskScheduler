@@ -12,6 +12,7 @@ namespace Hang.TaskScheduler.Options
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="cron"></param>
         public void AddCorn(string cron)
         {
 
