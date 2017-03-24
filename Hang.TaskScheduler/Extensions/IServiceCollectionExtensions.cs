@@ -21,7 +21,9 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new ArgumentNullException(nameof(services));
             }
 
-            return services.AddSingleton<TaskSchedulerService>();
+            services.AddSingleton<TaskSchedulerService>();
+
+            return services;
         }
 
         /// <summary>
@@ -42,9 +44,10 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new ArgumentNullException(nameof(configure));
             }
 
-            var builder = services.AddSingleton<TaskSchedulerService>();
+            services.Configure(configure);
+            services.AddHangTaskScheduler();
 
-            return builder;
+            return services;
         }
     }
 }

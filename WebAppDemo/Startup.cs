@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using WebAppDemo.Schedulers;
 
 namespace WebAppDemo
 {
@@ -30,7 +31,8 @@ namespace WebAppDemo
 
             services.AddHangTaskScheduler(option =>
             {
-                option.AddCorn("1 0/5 * * * ?");
+                //option.AddCorn("1 0/5 * * * ?");
+                option.AddDailyTasks(new TimeSpan(3, 0, 0), Class.Do);
             });
         }
 
