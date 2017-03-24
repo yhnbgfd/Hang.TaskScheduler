@@ -23,6 +23,11 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns></returns>
         public static IServiceCollection AddHangTaskScheduler(this IServiceCollection services, Action<TaskSchedulerOptions> configure)
         {
+
+
+
+
+
             return null;
         }
     }
