@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System;
 using WebAppDemo.Schedulers;
 
 namespace WebAppDemo
@@ -31,8 +28,8 @@ namespace WebAppDemo
 
             services.AddHangTaskScheduler(options =>
             {
-                options.AddDailyTasks(new TimeSpan(1, 0, 0), Class.Do1);
-                options.AddDailyTasks(new TimeSpan(3, 0, 0), Class.Do3);
+                options.AddDailyTasks(new TimeSpan(2, 14, 0), Class.Do1);
+                options.AddDailyTasks(new TimeSpan(2, 15, 0), Class.Do3);
             });
         }
 

@@ -14,7 +14,7 @@ namespace Hang.TaskScheduler.Options
         /// <summary>
         /// 每日任务
         /// </summary>
-        /// <param name="time"></param>
+        /// <param name="time">每天执行任务的时间</param>
         /// <param name="action"></param>
         public void AddDailyTasks(TimeSpan time, Action action)
         {

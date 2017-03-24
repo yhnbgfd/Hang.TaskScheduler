@@ -2,42 +2,36 @@
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Hang.TaskScheduler
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public class TaskSchedulerService
     {
         private readonly TaskSchedulerOptions _options;
+        private List<Timer> _timerList = new List<Timer>();
 
         public TaskSchedulerService(IOptions<TaskSchedulerOptions> options)
         {
             _options = options.Value;
 
-            StartTaskSchedulerServer();
-
-            Debug.WriteLine("TaskSchedulerService 构造函数");
-        }
-
-        private void StartTaskSchedulerServer()
-        {
-            Task.Factory.StartNew(() =>
+            foreach (var opt in _options.GetDailyTasks())
             {
-                foreach (var opt in _options.GetDailyTasks())
+                TimeSpan nextTime;
+                var now = DateTime.Now - DateTime.Now.Date;
+                if (now > opt.Key)
                 {
-                    Timer timer = new Timer((s) =>
-                    {
-                        opt.Value.Invoke();
-                        //Debug.WriteLine(DateTime.Now.ToString());
-                    }, null, new TimeSpan(0), opt.Key);
+                    nextTime = new TimeSpan(24, 0, 0) - (now - opt.Key);
                 }
-            }, TaskCreationOptions.LongRunning);
+                else
+                {
+                    nextTime = opt.Key - now;
+                }
+                _timerList.Add(new Timer((s) =>
+                {
+                    opt.Value.Invoke();
+                }, null, nextTime, new TimeSpan(24, 0, 0)));
+            }
         }
     }
 }
