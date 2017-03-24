@@ -5,6 +5,8 @@
     <Authors>Hang</Authors>
     <Company>Hang</Company>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageProjectUrl>https://github.com/yhnbgfd/Hang.TaskScheduler</PackageProjectUrl>
+    <Description>ASP.NET Core 定时任务服务</Description>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
