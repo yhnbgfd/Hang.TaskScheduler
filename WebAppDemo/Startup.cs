@@ -29,10 +29,10 @@ namespace WebAppDemo
         {
             services.AddMvc();
 
-            services.AddHangTaskScheduler(option =>
+            services.AddHangTaskScheduler(options =>
             {
-                //option.AddCorn("1 0/5 * * * ?");
-                option.AddDailyTasks(new TimeSpan(3, 0, 0), Class.Do);
+                options.AddDailyTasks(new TimeSpan(1, 0, 0), Class.Do1);
+                options.AddDailyTasks(new TimeSpan(3, 0, 0), Class.Do3);
             });
         }
 

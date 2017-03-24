@@ -8,9 +8,14 @@ namespace WebAppDemo.Schedulers
 {
     public class Class
     {
-        public static void Do()
+        public static void Do1()
         {
-            Debug.WriteLine("Do.........");
+            Debug.WriteLine("Do.........1");
+        }
+
+        public static void Do3()
+        {
+            Debug.WriteLine("Do.........3");
         }
     }
 }

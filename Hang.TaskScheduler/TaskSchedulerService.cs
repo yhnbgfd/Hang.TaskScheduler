@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Hang.TaskScheduler.Options;
+using Microsoft.Extensions.Options;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -12,20 +14,29 @@ namespace Hang.TaskScheduler
     /// </summary>
     public class TaskSchedulerService
     {
-        public TaskSchedulerService(IServiceProvider services)
+        private readonly TaskSchedulerOptions _options;
+
+        public TaskSchedulerService(IOptions<TaskSchedulerOptions> options)
         {
-            Debug.WriteLine("TaskSchedulerService 构造函数");
+            _options = options.Value;
+
             StartTaskSchedulerServer();
+
+            Debug.WriteLine("TaskSchedulerService 构造函数");
         }
 
         private void StartTaskSchedulerServer()
         {
             Task.Factory.StartNew(() =>
             {
-                Timer timer = new Timer((s) =>
+                foreach (var opt in _options.GetDailyTasks())
                 {
-                    Debug.WriteLine(DateTime.Now.ToString());
-                }, null, 0, 1000);
+                    Timer timer = new Timer((s) =>
+                    {
+                        opt.Value.Invoke();
+                        //Debug.WriteLine(DateTime.Now.ToString());
+                    }, null, new TimeSpan(0), opt.Key);
+                }
             }, TaskCreationOptions.LongRunning);
         }
     }
