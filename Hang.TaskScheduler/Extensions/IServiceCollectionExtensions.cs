@@ -1,8 +1,12 @@
-﻿using Hang.TaskScheduler.Options;
+﻿using Hang.TaskScheduler;
+using Hang.TaskScheduler.Options;
 using System;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
+    /// <summary>
+    /// Extension methods for setting up HangTaskScheduler services in an <see cref="IServiceCollection" />.
+    /// </summary>
     public static class HangTaskSchedulerIServiceCollectionExtensions
     {
         /// <summary>
@@ -12,7 +16,12 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns></returns>
         public static IServiceCollection AddHangTaskScheduler(this IServiceCollection services)
         {
-            return null;
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+
+            return services.AddSingleton<TaskSchedulerService>();
         }
 
         /// <summary>
@@ -23,12 +32,19 @@ namespace Microsoft.Extensions.DependencyInjection
         /// <returns></returns>
         public static IServiceCollection AddHangTaskScheduler(this IServiceCollection services, Action<TaskSchedulerOptions> configure)
         {
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
 
+            if (configure == null)
+            {
+                throw new ArgumentNullException(nameof(configure));
+            }
 
+            var builder = services.AddSingleton<TaskSchedulerService>();
 
-
-
-            return null;
+            return builder;
         }
     }
 }

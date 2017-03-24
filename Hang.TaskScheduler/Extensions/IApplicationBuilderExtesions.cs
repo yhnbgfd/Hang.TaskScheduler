@@ -1,4 +1,8 @@
-﻿namespace Microsoft.AspNetCore.Builder
+﻿using Hang.TaskScheduler;
+using Microsoft.Extensions.DependencyInjection;
+using System;
+
+namespace Microsoft.AspNetCore.Builder
 {
     public static class HangTaskSchedulerIApplicationBuilderExtensions
     {
@@ -9,7 +13,13 @@
         /// <returns></returns>
         public static IApplicationBuilder UseHangTaskScheduler(this IApplicationBuilder app)
         {
-            return null;
+            if (app == null)
+            {
+                throw new ArgumentNullException(nameof(app));
+            }
+
+            app.ApplicationServices.GetRequiredService<TaskSchedulerService>();
+            return app;
         }
     }
 }
