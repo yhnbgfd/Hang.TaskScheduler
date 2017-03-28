@@ -13,7 +13,7 @@ namespace Hang.TaskScheduler.Base
         public List<int> DayOfWeek { get; set; }
 
         /// <summary>
-        /// 
+        /// Create new Cron with Cron String
         /// </summary>
         /// <param name="cron"></param>
         public Cron(string cron)
@@ -44,9 +44,8 @@ namespace Hang.TaskScheduler.Base
         {
             if (Minute.Contains(dateTime.Minute)
                && Hour.Contains(dateTime.Hour)
-               && DayOfMonth.Contains(dateTime.Day)
                && Month.Contains(dateTime.Month)
-               && DayOfWeek.Contains((int)dateTime.DayOfWeek))
+               && (DayOfMonth.Contains(dateTime.Day) || DayOfWeek.Contains((int)dateTime.DayOfWeek)))
             {
                 return true;
             }
@@ -56,6 +55,10 @@ namespace Hang.TaskScheduler.Base
             }
         }
 
+        /// <summary>
+        /// 解析分钟（0 - 59）
+        /// </summary>
+        /// <param name="minuteCron"></param>
         private void ParseMinute(string minuteCron)
         {
             Minute = new List<int>();
@@ -94,6 +97,10 @@ namespace Hang.TaskScheduler.Base
                 }
             }
         }
+        /// <summary>
+        /// 解析小时（0 - 23）
+        /// </summary>
+        /// <param name="hourCron"></param>
         private void ParseHour(string hourCron)
         {
             Hour = new List<int>();
@@ -132,6 +139,10 @@ namespace Hang.TaskScheduler.Base
                 }
             }
         }
+        /// <summary>
+        /// 解析日（1 - 31）
+        /// </summary>
+        /// <param name="dayOfMonthCron"></param>
         private void ParseDayOfMonth(string dayOfMonthCron)
         {
             DayOfMonth = new List<int>();
@@ -170,6 +181,10 @@ namespace Hang.TaskScheduler.Base
                 }
             }
         }
+        /// <summary>
+        /// 解析月（1 - 12）
+        /// </summary>
+        /// <param name="monthCron"></param>
         private void ParseMonth(string monthCron)
         {
             Month = new List<int>();
@@ -187,7 +202,7 @@ namespace Hang.TaskScheduler.Base
                 else if (item.StartsWith("*/"))
                 {
                     var divisor = int.Parse(item.Substring(2));
-                    for (int i = 0; i < 12; i++)
+                    for (int i = 1; i <= 12; i++)
                     {
                         if (i % divisor == 0)
                         {
@@ -197,7 +212,7 @@ namespace Hang.TaskScheduler.Base
                 }
                 else if (item == "*")
                 {
-                    for (int i = 0; i < 12; i++)
+                    for (int i = 1; i <= 12; i++)
                     {
                         Month.Add(i);
                     }
@@ -208,6 +223,10 @@ namespace Hang.TaskScheduler.Base
                 }
             }
         }
+        /// <summary>
+        /// 解析星期（0 - 6，星期日=0）
+        /// </summary>
+        /// <param name="dayOfWeekCron"></param>
         private void ParseDayOfWeek(string dayOfWeekCron)
         {
             DayOfWeek = new List<int>();

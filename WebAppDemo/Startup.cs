@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Diagnostics;
 using WebAppDemo.Schedulers;
 
 namespace WebAppDemo
@@ -31,7 +32,8 @@ namespace WebAppDemo
             {
                 options.AddDailyTask(new TimeSpan(2, 14, 0), Class.Do1);
                 options.AddDailyTask(new TimeSpan(2, 15, 0), Class.Do3);
-                options.AddCronTask(new Cron("* * * * *"), Class.DoCron);
+                options.AddCronTask(new Cron("* * * * *"), () => { Debug.WriteLine("Cron1_" + DateTime.Now); });
+                options.AddCronTask(new Cron("*/3 * * * *"), () => { Debug.WriteLine("Cron2_" + DateTime.Now); });
             });
         }
 

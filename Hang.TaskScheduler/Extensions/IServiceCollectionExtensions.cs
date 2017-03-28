@@ -10,7 +10,7 @@ namespace Microsoft.Extensions.DependencyInjection
     public static class HangTaskSchedulerIServiceCollectionExtensions
     {
         /// <summary>
-        /// 
+        /// Extension methods for setting up HangTaskScheduler services in an <see cref="IServiceCollection" />.
         /// </summary>
         /// <param name="services"></param>
         /// <returns></returns>
