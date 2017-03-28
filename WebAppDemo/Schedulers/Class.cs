@@ -17,5 +17,10 @@ namespace WebAppDemo.Schedulers
         {
             Debug.WriteLine("Do.........3_" + DateTime.Now);
         }
+
+        public static void DoCron()
+        {
+            Debug.WriteLine("Do.........Cron_" + DateTime.Now);
+        }
     }
 }

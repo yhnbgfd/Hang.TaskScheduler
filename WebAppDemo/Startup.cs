@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Hang.TaskScheduler.Base;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,8 +29,9 @@ namespace WebAppDemo
 
             services.AddHangTaskScheduler(options =>
             {
-                options.AddDailyTasks(new TimeSpan(2, 14, 0), Class.Do1);
-                options.AddDailyTasks(new TimeSpan(2, 15, 0), Class.Do3);
+                options.AddDailyTask(new TimeSpan(2, 14, 0), Class.Do1);
+                options.AddDailyTask(new TimeSpan(2, 15, 0), Class.Do3);
+                options.AddCronTask(new Cron("* * * * *"), Class.DoCron);
             });
         }
 

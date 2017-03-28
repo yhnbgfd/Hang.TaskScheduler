@@ -32,6 +32,18 @@ namespace Hang.TaskScheduler
                     opt.Value.Invoke();
                 }, null, nextTime, new TimeSpan(24, 0, 0)));
             }
+
+            _timerList.Add(new Timer((s) =>
+            {
+                var now = DateTime.Now;
+                foreach (var cron in _options.GetCronTasks())
+                {
+                    if (cron.Key.IsMatch(now))
+                    {
+                        cron.Value.Invoke();
+                    }
+                }
+            }, null, new TimeSpan(0, 0, 0), new TimeSpan(0, 1, 0)));
         }
     }
 }
