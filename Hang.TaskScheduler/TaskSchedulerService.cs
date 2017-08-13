@@ -15,6 +15,16 @@ namespace Hang.TaskScheduler
         {
             _options = options.Value;
 
+            //获取启动任务
+            foreach (var opt in _options.GetStartupTasks())
+            {
+                _timerList.Add(new Timer((s) =>
+                {
+                    opt.Key.Invoke();
+                }, null, opt.Value, Timeout.Infinite));
+            }
+
+            //获取每日任务
             foreach (var opt in _options.GetDailyTasks())
             {
                 TimeSpan nextTime;
@@ -33,6 +43,7 @@ namespace Hang.TaskScheduler
                 }, null, nextTime, new TimeSpan(24, 0, 0)));
             }
 
+            //一个每分钟的定时器统一处理Cron定时任务
             _timerList.Add(new Timer((s) =>
             {
                 var now = DateTime.Now;

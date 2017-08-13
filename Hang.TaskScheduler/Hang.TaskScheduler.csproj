@@ -6,10 +6,10 @@
     <Company>Hang</Company>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/yhnbgfd/Hang.TaskScheduler</PackageProjectUrl>
-    <Description>ASP.NET Core 定时任务服务</Description>
-    <Version>1.1.0</Version>
+    <Description>ASP.NET Core Task Scheduler</Description>
+    <Version>1.2.0</Version>
     <PackageTags>ASPNETCORE Task Scheduler</PackageTags>
-    <PackageReleaseNotes>支持Cron</PackageReleaseNotes>
+    <PackageReleaseNotes>支持Cron，添加启动任务</PackageReleaseNotes>
     <Copyright>© 2017 Hang</Copyright>
     <RepositoryUrl>https://github.com/yhnbgfd/Hang.TaskScheduler</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
