@@ -29,17 +29,19 @@ namespace WebAppDemo
 
             services.AddHangTaskScheduler(options =>
             {
-                options.AddCronTask(new Cron("* * * * *"), () => { Debug.WriteLine($"CronTask {DateTime.Now}"); });
+                options.AddCronTask(new Cron("* * * * *"), () => { Console.WriteLine($"CronTask {DateTime.Now}"); });
             });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            loggerFactory.AddConsole();
 
             app.UseMvc();
 
