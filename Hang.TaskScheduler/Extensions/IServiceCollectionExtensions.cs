@@ -1,5 +1,6 @@
 ﻿using Hang.TaskScheduler;
 using Hang.TaskScheduler.Options;
+using Microsoft.Extensions.Hosting;
 using System;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -21,7 +22,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new ArgumentNullException(nameof(services));
             }
 
-            services.AddSingleton<TaskSchedulerService>();
+            services.AddSingleton<IHostedService, TaskSchedulerHostedService>();
 
             return services;
         }
@@ -45,6 +46,7 @@ namespace Microsoft.Extensions.DependencyInjection
             }
 
             services.Configure(configure);
+
             services.AddHangTaskScheduler();
 
             return services;
