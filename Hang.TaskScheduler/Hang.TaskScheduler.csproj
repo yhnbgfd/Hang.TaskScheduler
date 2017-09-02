@@ -7,9 +7,9 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/yhnbgfd/Hang.TaskScheduler</PackageProjectUrl>
     <Description>ASP.NET Core Task Scheduler</Description>
-    <Version>2.0.0</Version>
+    <Version>2.0.1</Version>
     <PackageTags>ASPNETCORE Task Scheduler</PackageTags>
-    <PackageReleaseNotes>支持Cron，添加启动任务</PackageReleaseNotes>
+    <PackageReleaseNotes>StartupTask,DailyTask,CronTask</PackageReleaseNotes>
     <Copyright>© 2017 Hang</Copyright>
     <RepositoryUrl>https://github.com/yhnbgfd/Hang.TaskScheduler</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
@@ -26,9 +26,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="1.1.1" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="1.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
