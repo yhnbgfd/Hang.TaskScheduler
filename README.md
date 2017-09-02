@@ -18,13 +18,11 @@ public void ConfigureServices(IServiceCollection services)
 {
     services.AddHangTaskScheduler(options =>
     {
+        options.AddStartupTask(() => { Debug.WriteLine("Cron1_StartupTaskDelay0" + DateTime.Now);, 0);
         options.AddDailyTask(new TimeSpan(2, 15, 0), () => { Debug.WriteLine("Cron1_" + DateTime.Now); });
         options.AddCronTask(new Cron("*/3 * * * *"), () => { Debug.WriteLine("Cron2_" + DateTime.Now); });
+        options.AddCronTask("*/3 * * * *", () => { Debug.WriteLine("Cron2_" + DateTime.Now); });
     });
 }
 
-public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
-{
-    app.UseHangTaskScheduler();
-}
 ```
