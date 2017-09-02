@@ -5,12 +5,11 @@ namespace Hang.TaskScheduler.Base
 {
     public class Cron
     {
-        private string _cron;
-        public List<int> Minute { get; set; }
-        public List<int> Hour { get; set; }
-        public List<int> DayOfMonth { get; set; }
-        public List<int> Month { get; set; }
-        public List<int> DayOfWeek { get; set; }
+        private List<int> _minute;
+        private List<int> _hour;
+        private List<int> _dayOfMonth;
+        private List<int> _month;
+        private List<int> _dayOfWeek;
 
         /// <summary>
         /// Create new Cron with Cron String
@@ -18,9 +17,7 @@ namespace Hang.TaskScheduler.Base
         /// <param name="cron"></param>
         public Cron(string cron)
         {
-            _cron = cron;
-
-            var spl = _cron.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            var spl = cron.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             if (spl.Length == 5)
             {
                 ParseMinute(spl[0]);
@@ -36,16 +33,16 @@ namespace Hang.TaskScheduler.Base
         }
 
         /// <summary>
-        /// 配置时间是否符合Cron
+        /// 配置传入的时间是否符合Cron
         /// </summary>
         /// <param name="dateTime"></param>
         /// <returns></returns>
         public bool IsMatch(DateTime dateTime)
         {
-            if (Minute.Contains(dateTime.Minute)
-               && Hour.Contains(dateTime.Hour)
-               && Month.Contains(dateTime.Month)
-               && (DayOfMonth.Contains(dateTime.Day) || DayOfWeek.Contains((int)dateTime.DayOfWeek)))
+            if (_minute.Contains(dateTime.Minute)
+               && _hour.Contains(dateTime.Hour)
+               && _month.Contains(dateTime.Month)
+               && (_dayOfMonth.Contains(dateTime.Day) || _dayOfWeek.Contains((int)dateTime.DayOfWeek)))
             {
                 return true;
             }
@@ -61,7 +58,7 @@ namespace Hang.TaskScheduler.Base
         /// <param name="minuteCron"></param>
         private void ParseMinute(string minuteCron)
         {
-            Minute = new List<int>();
+            _minute = new List<int>();
             foreach (var item in minuteCron.Split(','))
             {
                 if (item.Contains("-"))
@@ -70,7 +67,7 @@ namespace Hang.TaskScheduler.Base
                     var end = int.Parse(item.Split('-')[1]);
                     for (int i = start; i <= end; i++)
                     {
-                        Minute.Add(i);
+                        _minute.Add(i);
                     }
                 }
                 else if (item.StartsWith("*/"))
@@ -80,7 +77,7 @@ namespace Hang.TaskScheduler.Base
                     {
                         if (i % divisor == 0)
                         {
-                            Minute.Add(i);
+                            _minute.Add(i);
                         }
                     }
                 }
@@ -88,12 +85,12 @@ namespace Hang.TaskScheduler.Base
                 {
                     for (int i = 0; i < 60; i++)
                     {
-                        Minute.Add(i);
+                        _minute.Add(i);
                     }
                 }
                 else
                 {
-                    Minute.Add(int.Parse(item));
+                    _minute.Add(int.Parse(item));
                 }
             }
         }
@@ -103,7 +100,7 @@ namespace Hang.TaskScheduler.Base
         /// <param name="hourCron"></param>
         private void ParseHour(string hourCron)
         {
-            Hour = new List<int>();
+            _hour = new List<int>();
             foreach (var item in hourCron.Split(','))
             {
                 if (item.Contains("-"))
@@ -112,7 +109,7 @@ namespace Hang.TaskScheduler.Base
                     var end = int.Parse(item.Split('-')[1]);
                     for (int i = start; i <= end; i++)
                     {
-                        Hour.Add(i);
+                        _hour.Add(i);
                     }
                 }
                 else if (item.StartsWith("*/"))
@@ -122,7 +119,7 @@ namespace Hang.TaskScheduler.Base
                     {
                         if (i % divisor == 0)
                         {
-                            Hour.Add(i);
+                            _hour.Add(i);
                         }
                     }
                 }
@@ -130,12 +127,12 @@ namespace Hang.TaskScheduler.Base
                 {
                     for (int i = 0; i < 24; i++)
                     {
-                        Hour.Add(i);
+                        _hour.Add(i);
                     }
                 }
                 else
                 {
-                    Hour.Add(int.Parse(item));
+                    _hour.Add(int.Parse(item));
                 }
             }
         }
@@ -145,7 +142,7 @@ namespace Hang.TaskScheduler.Base
         /// <param name="dayOfMonthCron"></param>
         private void ParseDayOfMonth(string dayOfMonthCron)
         {
-            DayOfMonth = new List<int>();
+            _dayOfMonth = new List<int>();
             foreach (var item in dayOfMonthCron.Split(','))
             {
                 if (item.Contains("-"))
@@ -154,7 +151,7 @@ namespace Hang.TaskScheduler.Base
                     var end = int.Parse(item.Split('-')[1]);
                     for (int i = start; i <= end; i++)
                     {
-                        DayOfMonth.Add(i);
+                        _dayOfMonth.Add(i);
                     }
                 }
                 else if (item.StartsWith("*/"))
@@ -164,7 +161,7 @@ namespace Hang.TaskScheduler.Base
                     {
                         if (i % divisor == 0)
                         {
-                            DayOfMonth.Add(i);
+                            _dayOfMonth.Add(i);
                         }
                     }
                 }
@@ -172,12 +169,12 @@ namespace Hang.TaskScheduler.Base
                 {
                     for (int i = 1; i <= 31; i++)
                     {
-                        DayOfMonth.Add(i);
+                        _dayOfMonth.Add(i);
                     }
                 }
                 else
                 {
-                    DayOfMonth.Add(int.Parse(item));
+                    _dayOfMonth.Add(int.Parse(item));
                 }
             }
         }
@@ -187,7 +184,7 @@ namespace Hang.TaskScheduler.Base
         /// <param name="monthCron"></param>
         private void ParseMonth(string monthCron)
         {
-            Month = new List<int>();
+            _month = new List<int>();
             foreach (var item in monthCron.Split(','))
             {
                 if (item.Contains("-"))
@@ -196,7 +193,7 @@ namespace Hang.TaskScheduler.Base
                     var end = int.Parse(item.Split('-')[1]);
                     for (int i = start; i <= end; i++)
                     {
-                        Month.Add(i);
+                        _month.Add(i);
                     }
                 }
                 else if (item.StartsWith("*/"))
@@ -206,7 +203,7 @@ namespace Hang.TaskScheduler.Base
                     {
                         if (i % divisor == 0)
                         {
-                            Month.Add(i);
+                            _month.Add(i);
                         }
                     }
                 }
@@ -214,12 +211,12 @@ namespace Hang.TaskScheduler.Base
                 {
                     for (int i = 1; i <= 12; i++)
                     {
-                        Month.Add(i);
+                        _month.Add(i);
                     }
                 }
                 else
                 {
-                    Month.Add(int.Parse(item));
+                    _month.Add(int.Parse(item));
                 }
             }
         }
@@ -229,7 +226,7 @@ namespace Hang.TaskScheduler.Base
         /// <param name="dayOfWeekCron"></param>
         private void ParseDayOfWeek(string dayOfWeekCron)
         {
-            DayOfWeek = new List<int>();
+            _dayOfWeek = new List<int>();
             foreach (var item in dayOfWeekCron.Split(','))
             {
                 if (item.Contains("-"))
@@ -238,7 +235,7 @@ namespace Hang.TaskScheduler.Base
                     var end = int.Parse(item.Split('-')[1]);
                     for (int i = start; i <= end; i++)
                     {
-                        DayOfWeek.Add(i);
+                        _dayOfWeek.Add(i);
                     }
                 }
                 else if (item.StartsWith("*/"))
@@ -248,7 +245,7 @@ namespace Hang.TaskScheduler.Base
                     {
                         if (i % divisor == 0)
                         {
-                            DayOfWeek.Add(i);
+                            _dayOfWeek.Add(i);
                         }
                     }
                 }
@@ -256,12 +253,12 @@ namespace Hang.TaskScheduler.Base
                 {
                     for (int i = 0; i < 7; i++)
                     {
-                        DayOfWeek.Add(i);
+                        _dayOfWeek.Add(i);
                     }
                 }
                 else
                 {
-                    DayOfWeek.Add(int.Parse(item));
+                    _dayOfWeek.Add(int.Parse(item));
                 }
             }
         }

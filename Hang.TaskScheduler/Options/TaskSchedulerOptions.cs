@@ -43,6 +43,15 @@ namespace Hang.TaskScheduler.Options
         /// <summary>
         /// 添加Cron任务
         /// </summary>
+        /// <param name="cronString">Cron字符串</param>
+        /// <param name="action"></param>
+        public void AddCronTask(string cronString, Action action)
+        {
+            AddCronTask(new Cron(cronString), action);
+        }
+        /// <summary>
+        /// 添加Cron任务
+        /// </summary>
         /// <param name="cron"></param>
         /// <param name="action"></param>
         public void AddCronTask(Cron cron, Action action)
