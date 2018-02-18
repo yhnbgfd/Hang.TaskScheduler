@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -40,14 +41,14 @@ namespace Hang.TaskScheduler
                  foreach (var opt in _options.GetDailyTasks())
                  {
                      TimeSpan nextTime;
-                     var now = DateTime.Now - DateTime.Now.Date;
-                     if (now > opt.Key)
+                     var time = DateTime.Now - DateTime.Now.Date;
+                     if (time > opt.Key)
                      {
-                         nextTime = new TimeSpan(24, 0, 0) - (now - opt.Key);
+                         nextTime = new TimeSpan(24, 0, 0) - (time - opt.Key);
                      }
                      else
                      {
-                         nextTime = opt.Key - now;
+                         nextTime = opt.Key - time;
                      }
                      _timerList.Add(new Timer((s) =>
                      {
@@ -56,15 +57,13 @@ namespace Hang.TaskScheduler
                  }
 
                  //一个每分钟的定时器统一处理Cron定时任务
+                 var now = DateTime.Now;
+                 var cronTasks = _options.GetCronTasks().Where(kv => kv.Key.IsMatch(now));
                  _timerList.Add(new Timer((s) =>
                  {
-                     var now = DateTime.Now;
-                     foreach (var cron in _options.GetCronTasks())
+                     foreach (var cron in cronTasks)
                      {
-                         if (cron.Key.IsMatch(now))
-                         {
-                             cron.Value.Invoke();
-                         }
+                         cron.Value.Invoke();
                      }
                  }, null, new TimeSpan(0, 0, 0), new TimeSpan(0, 1, 0)));
              });
