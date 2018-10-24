@@ -24,8 +24,8 @@ namespace WebAppDemo
 
             services.AddHangTaskScheduler(options =>
             {
-                options.AddCronTask("* * * * *", () => { Console.WriteLine($"CronTaskString {DateTime.Now}"); });
-                options.AddCronTask(new Cron("* * * * *"), () => { Console.WriteLine($"CronTask {DateTime.Now}"); });
+                options.AddCronTask("*/3 * * * *", () => { Console.WriteLine($"CronTaskString {DateTime.Now}"); });
+                options.AddCronTask(new Cron("*/2 * * * *"), () => { Console.WriteLine($"CronTask {DateTime.Now}"); });
             });
         }
 

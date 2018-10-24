@@ -57,11 +57,11 @@ namespace Hang.TaskScheduler
                  }
 
                  //一个每分钟的定时器统一处理Cron定时任务
-                 var now = DateTime.Now;
-                 var cronTasks = _options.GetCronTasks().Where(kv => kv.Key.IsMatch(now));
+                 var cronTasks = _options.GetCronTasks();
                  _timerList.Add(new Timer((s) =>
                  {
-                     foreach (var cron in cronTasks)
+                     var now = DateTime.Now;
+                     foreach (var cron in cronTasks.Where(w => w.Key.IsMatch(now)))
                      {
                          cron.Value.Invoke();
                      }
