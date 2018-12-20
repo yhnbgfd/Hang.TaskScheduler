@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Hang</Authors>
     <Company>Hang</Company>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/yhnbgfd/Hang.TaskScheduler</PackageProjectUrl>
     <Description>ASP.NET Core Task Scheduler</Description>
     <Version>2.2.0</Version>
