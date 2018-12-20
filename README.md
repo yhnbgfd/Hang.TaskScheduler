@@ -18,10 +18,11 @@ public void ConfigureServices(IServiceCollection services)
 {
     services.AddHangTaskScheduler(options =>
     {
-        options.AddStartupTask(() => { Debug.WriteLine("Cron1_StartupTaskDelay0" + DateTime.Now); }, 500);
-        options.AddDailyTask(new TimeSpan(2, 15, 0), () => { Debug.WriteLine("Cron2_" + DateTime.Now); });
-        options.AddCronTask(new Cron("*/3 * * * *"), () => { Debug.WriteLine("Cron3_" + DateTime.Now); });
-        options.AddCronTask("*/3 * * * *", () => { Debug.WriteLine("Cron4_" + DateTime.Now); });
+        options.AddStartupTask(() => { Console.WriteLine($"StartupTask_delay500ms {DateTime.Now:HH:mm:ss.fff}"); }, 500);
+        options.AddDailyTask(new TimeSpan(23, 59, 00), () => { Console.WriteLine($"DailyTask {DateTime.Now:HH:mm:ss.fff}"); });
+        options.AddDailyTask(new TimeSpan(00, 00, 01), () => { Console.WriteLine($"DailyTasks_Reissue {DateTime.Now:HH:mm:ss.fff}"); }, true);
+        //options.AddCronTask(new Cron("*/5 * * * *"), () => { Console.WriteLine($"CronTask {DateTime.Now:HH:mm:ss.fff}"); });
+        options.AddCronTask("*/5 * * * *", () => { Console.WriteLine($"CronTask {DateTime.Now:HH:mm:ss.fff}"); });
     });
 }
 
