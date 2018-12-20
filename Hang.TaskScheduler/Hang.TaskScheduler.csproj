@@ -7,14 +7,13 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/yhnbgfd/Hang.TaskScheduler</PackageProjectUrl>
     <Description>ASP.NET Core Task Scheduler</Description>
-    <Version>2.1.1</Version>
+    <Version>2.2.0</Version>
     <PackageTags>ASPNETCORE Task Scheduler</PackageTags>
     <PackageReleaseNotes>StartupTask,DailyTask,CronTask</PackageReleaseNotes>
     <Copyright>© 2017 Hang</Copyright>
     <RepositoryUrl>https://github.com/yhnbgfd/Hang.TaskScheduler</RepositoryUrl>
     <RepositoryType>Github</RepositoryType>
-    <AssemblyVersion>2.1.1.0</AssemblyVersion>
-    <FileVersion>2.1.1.0</FileVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

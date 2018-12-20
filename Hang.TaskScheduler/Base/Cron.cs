@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Hang.TaskScheduler.Base
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class Cron
     {
         private List<int> _minute;

@@ -12,30 +12,32 @@ namespace Hang.TaskScheduler.Options
         /// <summary>
         /// 每日任务列表
         /// </summary>
-        private List<KeyValuePair<TimeSpan, Action>> _dailyTasksList = new List<KeyValuePair<TimeSpan, Action>>();
+        private List<DailyTask> _dailyTasksList = new List<DailyTask>();
         /// <summary>
         /// Cron任务列表
         /// </summary>
-        private List<KeyValuePair<Cron, Action>> _cronTasksList = new List<KeyValuePair<Cron, Action>>();
+        private List<CronTask> _cronTasksList = new List<CronTask>();
         /// <summary>
         /// 启动运行任务
         /// </summary>
-        private List<KeyValuePair<Action, int>> _startupTasksList = new List<KeyValuePair<Action, int>>();
+        private List<StartupTask> _startupTasksList = new List<StartupTask>();
 
         /// <summary>
         /// 添加每日任务
         /// </summary>
         /// <param name="time">每天执行任务的时间</param>
         /// <param name="action">要执行的方法</param>
-        public void AddDailyTask(TimeSpan time, Action action)
+        /// <param name="reissue">如果程序启动时已超过任务设定的时间，是否还补办执行任务，默认false不补办</param>
+        public void AddDailyTask(TimeSpan time, Action action, bool reissue = false)
         {
-            _dailyTasksList.Add(new KeyValuePair<TimeSpan, Action>(time, action));
+            _dailyTasksList.Add(new DailyTask { TaskTime = time, TaskAction = action, Reissue = reissue });
         }
+
         /// <summary>
         /// 获取所有每日任务
         /// </summary>
         /// <returns></returns>
-        public List<KeyValuePair<TimeSpan, Action>> GetDailyTasks()
+        internal List<DailyTask> GetDailyTasks()
         {
             return _dailyTasksList;
         }
@@ -49,6 +51,7 @@ namespace Hang.TaskScheduler.Options
         {
             AddCronTask(new Cron(cronString), action);
         }
+
         /// <summary>
         /// 添加Cron任务
         /// </summary>
@@ -56,13 +59,14 @@ namespace Hang.TaskScheduler.Options
         /// <param name="action"></param>
         public void AddCronTask(Cron cron, Action action)
         {
-            _cronTasksList.Add(new KeyValuePair<Cron, Action>(cron, action));
+            _cronTasksList.Add(new CronTask { TaskCron = cron, TaskAction = action });
         }
+
         /// <summary>
         /// 获取所有Cron任务
         /// </summary>
         /// <returns></returns>
-        public List<KeyValuePair<Cron, Action>> GetCronTasks()
+        internal List<CronTask> GetCronTasks()
         {
             return _cronTasksList;
         }
@@ -74,13 +78,14 @@ namespace Hang.TaskScheduler.Options
         /// <param name="delay">延时启动时间，单位毫秒</param>
         public void AddStartupTask(Action action, int delay = 0)
         {
-            _startupTasksList.Add(new KeyValuePair<Action, int>(action, delay));
+            _startupTasksList.Add(new StartupTask { TaskAction = action, Delay = delay });
         }
+
         /// <summary>
         /// 获取所有启动任务
         /// </summary>
         /// <returns></returns>
-        public List<KeyValuePair<Action, int>> GetStartupTasks()
+        internal List<StartupTask> GetStartupTasks()
         {
             return _startupTasksList;
         }

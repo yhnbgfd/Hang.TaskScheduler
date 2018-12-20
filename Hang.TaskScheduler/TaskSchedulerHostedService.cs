@@ -33,8 +33,17 @@ namespace Hang.TaskScheduler
                  {
                      _timerList.Add(new Timer((s) =>
                      {
-                         opt.Key.Invoke();
-                     }, null, opt.Value, Timeout.Infinite));
+                         opt.TaskAction.Invoke();
+                     }, null, opt.Delay, Timeout.Infinite));
+                 }
+
+                 //获取每日任务中，标记了补办且执行时间已经过去的任务，在程序启动时执行任务
+                 foreach (var opt in _options.GetDailyTasks().Where(s => s.TaskTime < DateTime.Now.TimeOfDay))
+                 {
+                     _timerList.Add(new Timer((s) =>
+                     {
+                         opt.TaskAction.Invoke();
+                     }, null, 0, Timeout.Infinite));
                  }
 
                  //获取每日任务
@@ -42,18 +51,18 @@ namespace Hang.TaskScheduler
                  {
                      TimeSpan nextTime;
                      var time = DateTime.Now - DateTime.Now.Date;
-                     if (time > opt.Key)
+                     if (time > opt.TaskTime)//当前时间已超过任务执行时间，则下次执行时间在明天
                      {
-                         nextTime = new TimeSpan(24, 0, 0) - (time - opt.Key);
+                         nextTime = TimeSpan.FromDays(1) - (time - opt.TaskTime);
                      }
                      else
                      {
-                         nextTime = opt.Key - time;
+                         nextTime = opt.TaskTime - time;
                      }
                      _timerList.Add(new Timer((s) =>
                      {
-                         opt.Value.Invoke();
-                     }, null, nextTime, new TimeSpan(24, 0, 0)));
+                         opt.TaskAction.Invoke();
+                     }, null, nextTime, TimeSpan.FromDays(1)));
                  }
 
                  //一个每分钟的定时器统一处理Cron定时任务
@@ -61,11 +70,11 @@ namespace Hang.TaskScheduler
                  _timerList.Add(new Timer((s) =>
                  {
                      var now = DateTime.Now;
-                     foreach (var cron in cronTasks.Where(w => w.Key.IsMatch(now)))
+                     foreach (var cron in cronTasks.Where(w => w.TaskCron.IsMatch(now)))
                      {
-                         cron.Value.Invoke();
+                         cron.TaskAction.Invoke();
                      }
-                 }, null, new TimeSpan(0, 0, 0), new TimeSpan(0, 1, 0)));
+                 }, null, TimeSpan.Zero, TimeSpan.FromMinutes(1)));
              });
             return Task.CompletedTask;
         }
