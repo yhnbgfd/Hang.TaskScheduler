@@ -7,7 +7,7 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/yhnbgfd/Hang.TaskScheduler</PackageProjectUrl>
     <Description>ASP.NET Core Task Scheduler</Description>
-    <Version>2.2.0</Version>
+    <Version>2.2.1</Version>
     <PackageTags>ASPNETCORE Task Scheduler</PackageTags>
     <PackageReleaseNotes>StartupTask,DailyTask,CronTask</PackageReleaseNotes>
     <Copyright>© 2017 Hang</Copyright>

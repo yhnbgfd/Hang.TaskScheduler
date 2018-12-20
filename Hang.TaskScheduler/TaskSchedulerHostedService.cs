@@ -38,7 +38,7 @@ namespace Hang.TaskScheduler
                  }
 
                  //获取每日任务中，标记了补办且执行时间已经过去的任务，在程序启动时执行任务
-                 foreach (var opt in _options.GetDailyTasks().Where(s => s.TaskTime < DateTime.Now.TimeOfDay))
+                 foreach (var opt in _options.GetDailyTasks().Where(s => s.Reissue == true && s.TaskTime < DateTime.Now.TimeOfDay))
                  {
                      _timerList.Add(new Timer((s) =>
                      {
