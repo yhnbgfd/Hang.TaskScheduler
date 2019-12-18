@@ -43,7 +43,7 @@ namespace Hang.TaskScheduler
                      _timerList.Add(new Timer((s) =>
                      {
                          opt.TaskAction.Invoke();
-                     }, null, 0, Timeout.Infinite));
+                     }, null, opt.Delay, Timeout.Infinite));
                  }
 
                  //获取每日任务

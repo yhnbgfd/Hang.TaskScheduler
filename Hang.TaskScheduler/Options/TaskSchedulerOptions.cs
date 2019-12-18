@@ -28,9 +28,16 @@ namespace Hang.TaskScheduler.Options
         /// <param name="time">每天执行任务的时间</param>
         /// <param name="action">要执行的方法</param>
         /// <param name="reissue">如果程序启动时已超过任务设定的时间，是否还补办执行任务，默认false不补办</param>
-        public void AddDailyTask(TimeSpan time, Action action, bool reissue = false)
+        /// <param name="delay">当Reissue=true时，延迟执行的时间</param>
+        public void AddDailyTask(TimeSpan time, Action action, bool reissue = false, int delay = 0)
         {
-            _dailyTasksList.Add(new DailyTask { TaskTime = time, TaskAction = action, Reissue = reissue });
+            _dailyTasksList.Add(new DailyTask
+            {
+                TaskTime = time,
+                TaskAction = action,
+                Reissue = reissue,
+                Delay = delay
+            });
         }
 
         /// <summary>
