@@ -12,15 +12,15 @@ namespace Hang.TaskScheduler.Options
         /// <summary>
         /// 每日任务列表
         /// </summary>
-        private List<DailyTask> _dailyTasksList = new List<DailyTask>();
+        private readonly List<DailyTask> _dailyTasksList = new List<DailyTask>();
         /// <summary>
         /// Cron任务列表
         /// </summary>
-        private List<CronTask> _cronTasksList = new List<CronTask>();
+        private readonly List<CronTask> _cronTasksList = new List<CronTask>();
         /// <summary>
         /// 启动运行任务
         /// </summary>
-        private List<StartupTask> _startupTasksList = new List<StartupTask>();
+        private readonly List<StartupTask> _startupTasksList = new List<StartupTask>();
 
         /// <summary>
         /// 添加每日任务
